@@ -7,9 +7,7 @@ import { MovieDetails } from "./components/MovieDetails";
 
 const API_BASE_URL = import.meta.env.VITE_TMDB_API_BASE_URL;
 
-const API_KEY =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjM2ZhYzE4MmI5ODYyYjEzYTMxOGMwMzA1YmQwM2ZmNCIsIm5iZiI6MTc0OTM4NjA1Ni4zOCwic3ViIjoiNjg0NTgzNDg0NDkwMTI4YzEzM2ZjM2YxIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.RTis8kVIWBkSh7JEFpLcxVNrdbNy0HZOmNF56b1LczM";
-
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 console.log(API_KEY);
 
 export const API_OPTIONS = {

@@ -3,12 +3,13 @@ import { useDebounce } from "react-use";
 import SearchBar from "./components/SearchBar";
 import Spinner from "./components/spinner";
 import MovieCard from "./components/MovieCard";
+import { MovieDetails } from "./components/MovieDetails";
 
-const API_BASE_URL = "https://api.themoviedb.org/3";
+const API_BASE_URL = import.meta.env.VITE_TMDB_API_BASE_URL;
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-const API_OPTIONS = {
+export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
@@ -25,6 +26,8 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [debouncedSearchTerm, setdebouncedSearchTerm] = useState("");
+
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
 
   useDebounce(() => setdebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
@@ -45,7 +48,7 @@ const App = () => {
       const data = await response.json();
       console.log(data);
 
-      if (data.response === "false") {
+      if (data.response === false) {
         setErrorMessage("Failed to Fetch Movies");
         setMovieList([]);
         return;
@@ -64,32 +67,51 @@ const App = () => {
     fetchMovies(debouncedSearchTerm);
   }, [debouncedSearchTerm]);
 
+  const onClick = (movie) => {
+    alert(`You clicked on ${movie.title}`);
+  };
+
   return (
     <main>
       <div className="pattern"></div>
       <div className="wrapper">
-        <header>
-          <img src="/hero.png" alt="Hero Banner" />
-          <h1>
-            Your Favourite <strong className="text-gradient">Movies</strong> Are
-            One Click Away
-          </h1>
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        </header>
-        <section className="all-movies">
-          <h2 className="mt-[40px]">All Movies</h2>
-          {isLoading ? (
-            <Spinner />
-          ) : errorMessage ? (
-            <p className="text-red-500">{errorMessage}</p>
-          ) : (
-            <ul>
-              {movieList.map((movie) => {
-                return <MovieCard key={movie.id} movie={movie} />;
-              })}
-            </ul>
-          )}
-        </section>
+        {selectedMovieId ? (
+          <MovieDetails
+            movieId={selectedMovieId}
+            onBack={() => setSelectedMovieId(null)}
+          />
+        ) : (
+          <>
+            <header>
+              <img src="/hero.png" alt="Hero Banner" />
+              <h1>
+                Your Favourite <strong className="text-gradient">Movies</strong>{" "}
+                Are One Click Away
+              </h1>
+              <SearchBar
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+              />
+            </header>
+
+            <section className="all-movies">
+              <h2 className="mt-[40px]">All Movies</h2>
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <ul className="w-full">
+                  {movieList.map((movie) => (
+                    <MovieCard
+                      key={movie.id}
+                      movie={movie}
+                      onClick={() => setSelectedMovieId(movie.id)}
+                    />
+                  ))}
+                </ul>
+              )}
+            </section>
+          </>
+        )}
       </div>
     </main>
   );

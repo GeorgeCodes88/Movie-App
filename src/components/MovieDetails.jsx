@@ -1,10 +1,13 @@
 import React from "react";
 import { useFetchMovieDetails } from "../hooks/useFetchMovieDetails";
+import { useParams, useNavigate } from "react-router-dom";
 import Spinner from "./spinner";
 import { MovieDetailsCast } from "./Cast";
 
-export const MovieDetails = ({ movieId, onBack }) => {
-  const { data, isLoading } = useFetchMovieDetails(movieId);
+export const MovieDetails = () => {
+  const { id } = useParams();
+  const navigate = useNavigate(-1);
+  const { data, isLoading } = useFetchMovieDetails(id);
 
   if (isLoading)
     return (
@@ -28,7 +31,7 @@ export const MovieDetails = ({ movieId, onBack }) => {
 
       <div className="relative z-10 max-w-6xl mx-auto p-6 md:p-11">
         <button
-          onClick={onBack}
+          onClick={() => navigate(-1)}
           className="mb-8 flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-md border border-white/10 cursor-pointer"
         >
           <span>←</span> Back to Search
@@ -107,7 +110,7 @@ export const MovieDetails = ({ movieId, onBack }) => {
             </div>
           </div>
         </div>
-        <MovieDetailsCast movieId={movieId} className="mt-10" />
+        <MovieDetailsCast movieId={id} className="mt-10" />
       </div>
     </div>
   );

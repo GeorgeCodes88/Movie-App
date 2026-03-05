@@ -1,4 +1,4 @@
-import { API_OPTIONS } from "../App";
+import { API_OPTIONS } from "../pages/Home";
 import { useState, useEffect } from "react";
 
 export const useFetchMovieDetails = (movieId) => {

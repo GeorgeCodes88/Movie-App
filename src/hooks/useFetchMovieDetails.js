@@ -15,7 +15,7 @@ export const useFetchMovieDetails = (movieId) => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `${API_BASE_URL}/movie/${movieId}`,
+          `${API_BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=credits`,
           API_OPTIONS,
         );
 

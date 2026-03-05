@@ -30,15 +30,18 @@ const App = () => {
 
   const [selectedMovieId, setSelectedMovieId] = useState(null);
 
+  const [includeAdult, setIncludeAdult] = useState(false);
+
   useDebounce(() => setdebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
   const fetchMovies = async (query = "") => {
     setIsLoading(true);
     setErrorMessage("");
     try {
+      const adultParam = `&include_adult=${includeAdult}`;
       const endpoint = query
-        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}${adultParam}`
+        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc${adultParam}`;
 
       const response = await fetch(endpoint, API_OPTIONS);
 
@@ -66,11 +69,7 @@ const App = () => {
 
   useEffect(() => {
     fetchMovies(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
-
-  const onClick = (movie) => {
-    alert(`You clicked on ${movie.title}`);
-  };
+  }, [debouncedSearchTerm, includeAdult]);
 
   return (
     <main>
@@ -92,6 +91,8 @@ const App = () => {
               <SearchBar
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
+                includeAdult={includeAdult}
+                setIncludeAdult={setIncludeAdult}
               />
             </header>
 

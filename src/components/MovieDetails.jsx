@@ -1,6 +1,7 @@
 import React from "react";
 import { useFetchMovieDetails } from "../hooks/useFetchMovieDetails";
 import Spinner from "./spinner";
+import { MovieDetailsCast } from "./Cast";
 
 export const MovieDetails = ({ movieId, onBack }) => {
   const { data, isLoading } = useFetchMovieDetails(movieId);
@@ -25,7 +26,7 @@ export const MovieDetails = ({ movieId, onBack }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent" />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto p-6 md:p-12">
+      <div className="relative z-10 max-w-6xl mx-auto p-6 md:p-11">
         <button
           onClick={onBack}
           className="mb-8 flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-md border border-white/10 cursor-pointer"
@@ -75,7 +76,7 @@ export const MovieDetails = ({ movieId, onBack }) => {
               {data.overview}
             </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 p-6 rounded-2xl bg-gray-200 border border-white/10 backdrop-blur-sm">
               <div>
                 <p className="text-gray-500 text-sm uppercase font-bold tracking-widest">
                   Genres
@@ -106,6 +107,7 @@ export const MovieDetails = ({ movieId, onBack }) => {
             </div>
           </div>
         </div>
+        <MovieDetailsCast movieId={movieId} className="mt-10" />
       </div>
     </div>
   );

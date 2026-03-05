@@ -5,6 +5,7 @@ import Spinner from "./spinner";
 import { MovieDetailsCast } from "./Cast";
 
 export const MovieDetails = () => {
+  console.log("MovieDetails component rendered");
   const { id } = useParams();
   const navigate = useNavigate(-1);
   const { data, isLoading } = useFetchMovieDetails(id);

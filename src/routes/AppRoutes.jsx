@@ -10,7 +10,10 @@ export default function AppRoutes() {
         <Route index element={<Home />} />
         <Route path="movie/:id" element={<MovieDetails />} />
       </Route>
-      <Route path="*" element={<div className="text-white">Not Found</div>} />
+      <Route
+        path="*"
+        element={<div className="text-white">404 - Not Found</div>}
+      />
     </Routes>
   );
 }

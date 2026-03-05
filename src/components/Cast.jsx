@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Spinner from "./spinner";
-import { CastCard } from "./CastCard";
+import { CastList } from "./CastList";
 import { useFetchMovieDetails } from "../hooks/useFetchMovieDetails";
 
 export const MovieDetailsCast = ({ movieId }) => {
+  console.log("Cast component rendered");
   const { data, isLoading } = useFetchMovieDetails(movieId);
   const [showAll, setShowAll] = useState(false);
+  const cast = useMemo(() => {
+    return data?.credits?.cast || [];
+  }, [data]);
 
   if (isLoading)
     return (
@@ -13,9 +17,6 @@ export const MovieDetailsCast = ({ movieId }) => {
         <Spinner />
       </div>
     );
-
-  const cast = data?.credits?.cast?.slice() || [];
-  console.log(cast);
 
   if (cast.length === 0) return null;
 
@@ -39,18 +40,7 @@ export const MovieDetailsCast = ({ movieId }) => {
     }
   `}
       >
-        {cast.map((actor) => (
-          <div
-            key={actor.id}
-            className={showAll ? "w-full" : "flex-shrink-0 w-24 sm:w-32"}
-          >
-            <CastCard
-              name={actor.name}
-              character={actor.character}
-              profile_path={actor.profile_path}
-            />
-          </div>
-        ))}
+        <CastList cast={cast} showAll={showAll} />
       </div>
     </div>
   );

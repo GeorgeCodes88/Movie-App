@@ -1,6 +1,7 @@
 import React from "react";
 
 export const CastCard = ({ name, character, profile_path }) => {
+  // console.log(`CastCard component rendered ${name}`);
   const imageUrl = profile_path
     ? `https://image.tmdb.org/t/p/w200${profile_path}`
     : "https://placehold.co/200x300?text=No+Image";

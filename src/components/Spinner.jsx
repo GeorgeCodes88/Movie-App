@@ -1,6 +1,7 @@
 import React from "react";
 
 const Spinner = () => {
+  console.log("Spinner component rendered");
   return (
     <>
       <div role="status">

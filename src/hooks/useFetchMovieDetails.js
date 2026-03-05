@@ -2,6 +2,7 @@ import { API_OPTIONS } from "../pages/Home";
 import { useState, useEffect } from "react";
 
 export const useFetchMovieDetails = (movieId) => {
+  console.log("useFetchMovieDetails hook rendered");
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 

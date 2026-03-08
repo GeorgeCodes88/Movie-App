@@ -60,7 +60,7 @@ const Home = () => {
     fetchMovies(debouncedSearchTerm);
 
     return () => {
-      controller.abort(); // Cancel the fetch if user types again or unmounts
+      controller.abort();
     };
   }, [debouncedSearchTerm, includeAdult]);
 
